@@ -1,3 +1,3 @@
 FROM ubuntu
 VOLUME /tmp
-COPY target/devops-pylife*.jar app.jar
+COPY target/devops-pylife*.jar /tmp/app.jar
