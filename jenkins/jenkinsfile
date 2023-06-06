@@ -61,7 +61,7 @@ pipeline {
          }
     stage('Archive and clean workspace') {
                 steps {
-                    archiveArtifacts 'jenkins/workspace/maven-pipeline-git/target/devops-pylife*.jar'
+                    archiveArtifacts 'target/devops-pylife*.jar'
                     //archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
                     cleanWs()
                 }
