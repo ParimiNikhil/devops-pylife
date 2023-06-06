@@ -50,10 +50,10 @@ pipeline {
     stage('Docker Build') {
             steps {
                 
-                withCredentials([string(credentialsId: 'docker_token', variable: 'docker _passwd')])
+                withCredentials([string(credentialsId: 'docker_token', variable: 'docker_passwd')])
 
                     sh 'docker build . -t nikhilkumar11/pylifedevops:test'
-                    sh 'docker login -u nikhilkumar11 -p ${docker _passwd}'
+                    sh 'docker login -u nikhilkumar11 -p ${docker_passwd}'
                     sh 'docker push nikhilkumar11/pylifedevops:test'
                     sh 'docker run -d nikhilkumar11/pylifedevops:test'
                 }
