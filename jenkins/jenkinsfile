@@ -52,10 +52,10 @@ pipeline {
                 
                 withCredentials([string(credentialsId: 'docker_token', variable: 'docker _passwd')])
 
-                    sh 'docker build . -t nikhilkumar11/pylifedevops:latest'
+                    sh 'docker build . -t nikhilkumar11/pylifedevops:test'
                     sh 'docker login -u nikhilkumar11 -p ${docker _passwd}'
-                    sh 'docker push nikhilkumar11/pylifedevops:latest'
-                    sh 'docker run -d nikhilkumar11/pylifedevops:latest'
+                    sh 'docker push nikhilkumar11/pylifedevops:test'
+                    sh 'docker run -d nikhilkumar11/pylifedevops:test'
                 }
          }
     stage('Archive and clean workspace') {
