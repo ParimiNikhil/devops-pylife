@@ -55,6 +55,7 @@ pipeline {
                     sh 'docker build . -t nikhilkumar11/pylifedevops:latest'
                     sh 'docker login -u nikhilkumar11 -p ${docker _passwd}'
                     sh 'docker push nikhilkumar11/pylifedevops:latest'
+                    sh 'docker run -d nikhilkumar11/pylifedevops:latest'
                 }
          }
     stage('Archive and clean workspace') {
