@@ -51,15 +51,25 @@ pipeline {
 
 
     stage('Docker Build') {
-          steps {
+            steps {
+                
+                withCredentials([string(credentialsId: 'docker_token', variable: 'docker _passwd')])
 
-        	  	sh 'docker build . -t nikhilkumar11/pylifedevops:latest'
-        	  	//sh 'docker login -u nikhilkumar11 -p secret'
-        	  	//sh 'docker push nikhilkumar11/pylifedevops:latest'
-        	  	sh 'docker run -d nikhilkumar11/pylifedevops:latest'
-        	 
-            }
-       
+                    sh 'docker build . -t nikhilkumar11/pylifedevops:latest'
+                    sh 'docker login -u nikhilkumar11 -p ${docker _passwd}'
+                    sh 'docker push nikhilkumar11/pylifedevops:latest'
+                }
+
+         }
     }
-}
+
+    stage('Archive and clean workspace') {
+                steps {
+
+                    archiveArtifacts 'target/devops-pylife*.jar'
+                    //archiveArtifacts artifacts: 'target/*.jar', followSymlinks: false
+                    cleanWs()
+                }
+            }
+    }
 }
