@@ -61,8 +61,8 @@ pipeline {
          }
     stage('Archive and clean workspace') {
                 steps {
-                    archiveArtifacts 'target/devops-pylife*.jar'
-                    //archiveArtifacts artifacts: 'target/devops-pylife*.jar', followSymlinks: false
+                    //archiveArtifacts 'target/devops-pylife*.jar'
+                    archiveArtifacts artifacts: 'target/devops-pylife*.jar', followSymlinks: false
                     cleanWs()
                 }
             }
