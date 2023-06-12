@@ -52,13 +52,43 @@ pipeline {
                 
                 withCredentials([string(credentialsId: 'docker_token', variable: 'docker_passwd')]){
 
-                    sh 'docker build . -t nikhilkumar11/pylifedevops:test'
+                    sh 'docker build . -t nikhilkumar11/pylifedevops:latest'
                     sh 'docker login -u nikhilkumar11 -p ${docker_passwd}'
-                    sh 'docker push nikhilkumar11/pylifedevops:test'
-                    sh 'docker run -d nikhilkumar11/pylifedevops:test'
+                    sh 'docker push nikhilkumar11/pylifedevops:latest'
+                   // sh 'docker run -d nikhilkumar11/pylifedevops:latest'
                 }
                 }
          }
+    stage ('K8SManiFest-Checkout') {
+                steps {
+
+                    git 'https://github.com/ParimiNikhil/devops-pylife.git'
+
+                }
+            }
+    stage ('Kubernetes AutoDeployment') {
+  
+
+                steps {
+
+                    dir('manifests')
+                     {
+
+                    sh 'ls -l'
+                    // kubectl apply -f <fileName>.yml
+                    sh 'kubectl --server=https://3F1099487DDC373CFDFF054F682D50EA.gr7.us-east-1.eks.amazonaws.com --insecure-skip-tls-verify --token="eyJhbGciOiJSUzI1NiIsImtpZCI6IkZoQUotZDJrMzVscnVJZHdSaHc2RE9oVDB0WFRuZ0ZkOWVLNHVBbHpiclEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImplbmtpbnMtc2EiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiamVua2lucyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImNjYjI3ODU4LWYzNjctNDUxMC1iMWUwLWEzMTEzNjQyN2U1ZSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmplbmtpbnMifQ.jEYa2VQDZMYtMzw3JI3YbIAqj6RNlNDBivMWmjXNehxvdApTkMM13tQeQ5WKwB2-nDpG63ZkxiaJWyzLCx187un5tHPyUmmWge_jMMMULwOANJs3zWylQWzi3gx7NrUaq0uJ2_xpNFs0xlBU-BsxURF-fmY1CBb_FzXv7Ei29zc0C_2hkLTSkdVB5gvGCW3jiUAicD0IIdL64WpUkifm_OdjF2Gmppd1xjrHnM10X7MdGhVYdAqMN7eAAEpvXbObDrv-OzlwddXY3JTymQySvAkL3X7x8fANqiFpqcsiIHDCcG9Sjzkqp5z3Zh7iklj4_vDpNXbI6q7HVpghQzBX3g" apply -f deployment.yml'
+
+                    sh 'kubectl --server=https://3F1099487DDC373CFDFF054F682D50EA.gr7.us-east-1.eks.amazonaws.com --insecure-skip-tls-verify --token="eyJhbGciOiJSUzI1NiIsImtpZCI6IkZoQUotZDJrMzVscnVJZHdSaHc2RE9oVDB0WFRuZ0ZkOWVLNHVBbHpiclEifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJkZWZhdWx0Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImplbmtpbnMtc2EiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiamVua2lucyIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6ImNjYjI3ODU4LWYzNjctNDUxMC1iMWUwLWEzMTEzNjQyN2U1ZSIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDpkZWZhdWx0OmplbmtpbnMifQ.jEYa2VQDZMYtMzw3JI3YbIAqj6RNlNDBivMWmjXNehxvdApTkMM13tQeQ5WKwB2-nDpG63ZkxiaJWyzLCx187un5tHPyUmmWge_jMMMULwOANJs3zWylQWzi3gx7NrUaq0uJ2_xpNFs0xlBU-BsxURF-fmY1CBb_FzXv7Ei29zc0C_2hkLTSkdVB5gvGCW3jiUAicD0IIdL64WpUkifm_OdjF2Gmppd1xjrHnM10X7MdGhVYdAqMN7eAAEpvXbObDrv-OzlwddXY3JTymQySvAkL3X7x8fANqiFpqcsiIHDCcG9Sjzkqp5z3Zh7iklj4_vDpNXbI6q7HVpghQzBX3g" apply -f service.yml'
+
+                    echo "done"
+
+                    sh 'kubectl get deployments'
+                    sh 'sleep 100 ; kubectl get services'
+                    
+                    }
+
+                    }
+                }     
     stage('Archive and clean workspace') {
                 steps {
                     //archiveArtifacts 'target/devops-pylife*.jar'
