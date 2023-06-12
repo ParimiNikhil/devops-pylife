@@ -62,7 +62,7 @@ pipeline {
     stage ('K8SManiFest-Checkout') {
                 steps {
 
-                    git 'https://github.com/ParimiNikhil/devops-pylife.git'
+                    git branch:appBranch , url:'https://github.com/ParimiNikhil/devops-pylife.git'
 
                 }
             }
